@@ -65,12 +65,7 @@ document.querySelector('#reset').addEventListener(eventHandlerType, function() {
     }
 }, false);
 
-function startCount() {
-    const now = Date.now();
-    startTime = now - stopTime;
-    lapTime   = now - lapStopTime;
-    return setInterval(printTime, 1);
-}
+
 
 function stopCount() {
     const now   = Date.now()
@@ -122,3 +117,13 @@ function getStorage() {
     return params ? JSON.parse(params) : {};
 }
 document.addEventListener('keypress', keypress_ivent);
+
+const keybind = function keybind(dom) {
+    document.addEventListener('keydown', logKey);
+    function startCount() {
+        const now = Date.now();
+        startTime = now - stopTime;
+        lapTime   = now - lapStopTime;
+        return setInterval(printTime, 1);
+    }
+};
