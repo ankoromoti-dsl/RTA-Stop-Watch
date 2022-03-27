@@ -5,12 +5,12 @@ let lapNum = 1;
 
 const storage = getStorage();
 
-let state       = storage.state       ?? 0, 
-    startTime   = storage.startTime   ?? 0, 
-    stopTime    = storage.stopTime    ?? 0, 
+let state       = storage.state       ?? 0,
+    startTime   = storage.startTime   ?? 0,
+    stopTime    = storage.stopTime    ?? 0,
     lapTime     = storage.lapTime     ?? 0, 
     lapStopTime = storage.lapStopTime ?? 0, 
-    id;
+    id; 
 
 onload = function() {
     if(state === 1) {
@@ -24,7 +24,6 @@ onload = function() {
 
 const eventHandlerType =
     window.ontouchstart !== undefined ? 'touchstart' : 'mousedown';
-
 document.querySelector('#start').addEventListener(eventHandlerType, function() {
     if(state === 0) {
         if(id = startCount()) {
@@ -55,17 +54,26 @@ document.querySelector('#reset').addEventListener(eventHandlerType, function() {
     }
     else {
         document.querySelector('#lap').appendChild(document.createElement("div"));
+
         document.querySelector('#lap>div:last-of-type').textContent = (lapNum++) + ' : ' + getTimeString();
+
         lapTime = Date.now();
+
         if(document.querySelector('#lap').childElementCount > lapCount)
             document.querySelector('#lap').removeChild(document.querySelector('#lap').childNodes[0]);
+
         document.querySelector('#lap').scrollTop = document.querySelector('#lap').scrollHeight;
 
         setStorage();
     }
 }, false);
 
-
+function startCount() {
+    const now = Date.now();
+    startTime = now - stopTime;
+    lapTime   = now - lapStopTime;
+    return setInterval(printTime, 1);
+}
 
 function stopCount() {
     const now   = Date.now()
@@ -116,14 +124,3 @@ function getStorage() {
     const params = localStorage.getItem('stopwatch_params');
     return params ? JSON.parse(params) : {};
 }
-document.addEventListener('keypress', keypress_ivent);
-
-const keybind = function keybind(dom) {
-    document.addEventListener('keydown', logKey);
-    function startCount() {
-        const now = Date.now();
-        startTime = now - stopTime;
-        lapTime   = now - lapStopTime;
-        return setInterval(printTime, 1);
-    }
-};
