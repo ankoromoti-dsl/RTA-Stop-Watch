@@ -119,7 +119,6 @@ function setStorage() {
 function deleteStorage() {
     localStorage.removeItem('stopwatch_params');
 }
-
 function getStorage() {
     const params = localStorage.getItem('stopwatch_params');
     return params ? JSON.parse(params) : {};
