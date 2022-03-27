@@ -28,7 +28,7 @@ document.querySelector('#start').addEventListener(eventHandlerType, function() {
     if(state === 0) {
         if(id = startCount()) {
             document.querySelector('#start').value = 'STOP';
-            document.querySelector('#reset').value = 'LAP';
+            document.querySelector('#reset').value = 'LAP'
             state = 1;
             setStorage();
         }
